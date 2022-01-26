@@ -1,0 +1,5 @@
+make clean
+make
+clang -O0 -emit-llvm -c loop.c
+opt -load ./InjectionPass.so -inject_function_calls loop.bc --injection main > instrumented_loop.bc
+clang++ instrumented_loop.bc -o loop -lzlog -lpthread -L/usr/local/lib -L/home/user/sf_pmm/InjectionPass -llogger
